@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\commentsController;
 use App\Http\Controllers\productsController;
 use App\Http\Controllers\TasksController;
@@ -131,3 +132,11 @@ Route::get('/tasks',[TasksController::class,'showall']);
 Route::post('/task/add',[TasksController::class,'addtask']);
 Route::resource('comments',commentsController::class);
 Route::resource('products',productsController::class);
+
+Route::post('user/register',[AuthController::class,'register']);
+//login route
+Route::post('user/login',[AuthController::class,'login']);
+//logout route
+Route::group(['middleware'=>['auth:sanctum']],function(){
+    Route::get('/user/logout/{id}', [AuthController::class,'logout']);
+});
